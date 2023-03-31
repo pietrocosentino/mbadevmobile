@@ -1,0 +1,172 @@
+openapi: "3.0.0"
+info:
+  title: "API de encurtamento de URL - mbadevmobile"
+  version: "1.0.0"
+  description: "Encurtamento de URLs."
+tags:
+  - name: search
+    description: "Busca de URLs encurtadas utilizando a API"
+  - name: insert
+    description: "Encurta e armazena uma URL"
+paths:
+  /search/{urlId}:
+    get:
+      tags:
+        - search
+      summary: "Url encurtada com base no id"
+      operationId: searchURL
+      parameters:
+        - name: urlId
+          in: path
+          description: ID da url salva no banco
+          required: true
+          schema:
+            type: number
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/mbadevmobile'
+              example:
+                id: 1
+                url: "https://www.google.com/search?q=eur+to+brl&sxsrf=ALiCzsZykA5ECQFYYY98ewLizy1LE1XbxA%3A1660528493441&ei=baf5YqbBGtDs1sQPk6G94AM&ved=0ahUKEwjmq_bX3sf5AhVQtpUCHZNQDzwQ4dUDCA8&uact=5&oq=eur+to+brl&gs_lcp=Cgdnd3Mtd2l6EAMyBQgAEMQCMgUIABCABDIECAAQQzIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywEyBggAEB4QBzIGCAAQHhAHMgYIABAeEAc6BwgAEEcQsAM6BwgAELADEEM6CAgAEB4QBxAKSgQIQRgASgQIRhgAUIoHWJ0KYI8NaAJwAXgAgAG_AYgBtQSSAQMwLjOYAQCgAQHIAQrAAQE&sclient=gws-wiz"
+                shortUrl: http://localhost:3033/url-e/93Ub58Y
+                createDate: "2022-08-15T21:07:03.000Z"
+        400:
+          description: Solicitação não realizada!
+          content:
+            application/json:
+              schema:
+                type: Object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: "Informe o id da URL."
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: Object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: "Solicitação não realizada!"
+  /search:
+    post:
+      tags:
+        - search
+      summary: "Retorna url com base no id ou encurtamento da URL, ou a lista de URL's com datas específicas"
+      requestBody:
+        description: Preencher ao menos um campo
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Searchmbadevmobile'
+
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/mbadevmobile'
+              example:
+                id: 1
+                url: "https://www.google.com/search?q=eur+to+brl&sxsrf=ALiCzsZykA5ECQFYYY98ewLizy1LE1XbxA%3A1660528493441&ei=baf5YqbBGtDs1sQPk6G94AM&ved=0ahUKEwjmq_bX3sf5AhVQtpUCHZNQDzwQ4dUDCA8&uact=5&oq=eur+to+brl&gs_lcp=Cgdnd3Mtd2l6EAMyBQgAEMQCMgUIABCABDIECAAQQzIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywEyBggAEB4QBzIGCAAQHhAHMgYIABAeEAc6BwgAEEcQsAM6BwgAELADEEM6CAgAEB4QBxAKSgQIQRgASgQIRhgAUIoHWJ0KYI8NaAJwAXgAgAG_AYgBtQSSAQMwLjOYAQCgAQHIAQrAAQE&sclient=gws-wiz"
+                shortUrl: http://localhost:3033/url-e/93Ub58Y
+                createDate: "2022-08-15T21:07:03.000Z"
+        400:
+          description: Requisição não realizada
+          content:
+            application/json:
+              schema:
+                type: Object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: "Informe o id ou uma data."
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: Object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: "Nenhuma URL encontrada!"
+  /shorter:
+    post:
+      tags:
+        - insert
+      summary: "Url encurtada salva no banco de dados"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: Object
+              properties:
+                url:
+                  type: string
+              example:
+                url: "https://www.google.com/search?q=eur+to+brl&sxsrf=ALiCzsZykA5ECQFYYY98ewLizy1LE1XbxA%3A1660528493441&ei=baf5YqbBGtDs1sQPk6G94AM&ved=0ahUKEwjmq_bX3sf5AhVQtpUCHZNQDzwQ4dUDCA8&uact=5&oq=eur+to+brl&gs_lcp=Cgdnd3Mtd2l6EAMyBQgAEMQCMgUIABCABDIECAAQQzIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywEyBggAEB4QBzIGCAAQHhAHMgYIABAeEAc6BwgAEEcQsAM6BwgAELADEEM6CAgAEB4QBxAKSgQIQRgASgQIRhgAUIoHWJ0KYI8NaAJwAXgAgAG_AYgBtQSSAQMwLjOYAQCgAQHIAQrAAQE&sclient=gws-wiz"
+
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/mbadevmobile'
+              example:
+                id: 1
+                url: "https://www.google.com/search?q=eur+to+brl&sxsrf=ALiCzsZykA5ECQFYYY98ewLizy1LE1XbxA%3A1660528493441&ei=baf5YqbBGtDs1sQPk6G94AM&ved=0ahUKEwjmq_bX3sf5AhVQtpUCHZNQDzwQ4dUDCA8&uact=5&oq=eur+to+brl&gs_lcp=Cgdnd3Mtd2l6EAMyBQgAEMQCMgUIABCABDIECAAQQzIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywEyBggAEB4QBzIGCAAQHhAHMgYIABAeEAc6BwgAEEcQsAM6BwgAELADEEM6CAgAEB4QBxAKSgQIQRgASgQIRhgAUIoHWJ0KYI8NaAJwAXgAgAG_AYgBtQSSAQMwLjOYAQCgAQHIAQrAAQE&sclient=gws-wiz"
+                shortUrl: http://localhost:3033/url-e/93Ub58Y
+                createDate: "2023-03-30T21:07:03.000Z"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: Object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: "Solicitação não realizada!"
+
+components:
+  schemas:
+    mbadevmobile:
+      type: Object
+      properties:
+        id:
+          type: number
+        url:
+          type: string
+        shortUrl:
+          type: string
+        createDate:
+          type: Date
+    Searchmbadevmobile:
+      type: Object
+      properties:
+        urlId:
+          type: number
+        shortUrl:
+          type: string
+        date:
+          type: string
+      example:
+        urlId: 8
+        shortUrl: 8J6fb9p
+        date: 10-08-2022

@@ -1,0 +1,29 @@
+{
+  "name": "mbademobile",
+  "version": "1.0.0",
+  "description": "Projeto encurtador de URL",
+  "main": "src/index.js",
+  "repository": "git@github.com:picos88/mbademobile.git",
+  "author": "Pietro Cosentino",
+  "license": "MIT",
+  "scripts": {
+    "generate:doc": "jsdoc -r src",
+    "start": "node src/index.js",
+    "dev": "NODE_ENV=test nodemon src/index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "jsdoc": "^3.6.11",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.3.3",
+    "swagger-jsdoc": "^6.2.5",
+    "swagger-ui-express": "^4.5.0",
+    "winston": "^3.8.1",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
